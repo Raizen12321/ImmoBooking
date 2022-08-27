@@ -1,0 +1,67 @@
+﻿<style>
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.main{
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(300px,300px));
+    column-gap: 10px;
+    row-gap: 10px;
+}
+
+img{
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    object-position: center;
+    transition: transform .1s;
+    border-radius: 8px;
+}
+
+img:hover{
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Safari 3-8 */
+    transform: scale(1.5);
+    }
+
+</style>
+
+
+        <div class="text-center">
+              <h1 class="mb-3">Property Photos</h1>
+         </div>
+
+  <div class="main zoom">
+    <img src="https://i.ibb.co/hDgJJXf/Appart-1-S1.jpg" alt="Not Found">
+    <img src="https://i.ibb.co/hDgJJXf/Appart-1-S1.jpg" alt="Not Found">
+    <img src="https://i.ibb.co/hDgJJXf/Appart-1-S1.jpg" alt="Not Found">
+    <img src="https://i.ibb.co/HCcvQr1/Appart-2-S2.jpg" alt="Not Found">
+    <img src="https://i.ibb.co/HCcvQr1/Appart-2-S2.jpg" alt="Not Found">
+    <img src="https://i.ibb.co/xjLFzDv/Appart-3-S3.jpg" alt="Not Found">
+    <img src="https://i.ibb.co/xjLFzDv/Appart-3-S3.jpg" alt="Not Found">
+    <img src="https://media.techtribune.net/uploads/2020/10/sasuke-sharingan-rinnegan-eyes-lightning.jpg" alt="Not Found">
+    <img src="https://i.ibb.co/KN8v1W2/Villa-1-S2.webp" alt="Not Found">
+    <img src="https://i.ibb.co/KN8v1W2/Villa-1-S2.webp" alt="Not Found">
+  </div>
+
+<div style="position : fixed; right : 25px; bottom:25px" class="text-white">
+    <a asp-action="Index" class="btn btn-danger">
+
+        <i class="bi bi-arrow-left-circle"></i> Retour
+        </a>
+</div>

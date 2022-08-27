@@ -1,0 +1,97 @@
+﻿@using ImmoBooking.Models
+@model Property
+
+@{
+    ViewData["Title"]= "Details de la Propriété";
+ }
+
+<div class="row">
+
+        <div class="col-md-8 offset-2">
+            <div class="card mb-12">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div class="card-header text-white bg-info">
+                            <p class="card-text">
+                                <h5 class="card-title">
+                                    @Model.Name
+                                    
+                                </h5>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 container">
+                        <a asp-action="Images"><img src="@Model.MainImageURL" width="110%" height="80%" alt="@Model.Name"></a>
+                        <div class="overlay">Voir Les Photos</div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <p class="card-text">@Model.Description</p>
+                            <p class="card-text"><b>Agence: </b>
+                                <a asp-controller="Agencies" asp-action="Details" asp-route-id="@Model.AgencieId">
+                                    @Model.Agencie.Name
+                                </a>
+                                
+                            </p>
+                            <p class="card-text"><b>Propriétaire : </b>
+                                <a asp-controller="Owners" asp-action="Details" asp-route-id="@Model.OwnerId">
+                                    @Model.Owner.FullName
+                                </a>
+                            </p>
+                            <p class="card-text"><b>Catégorie: </b>@Model.PropertyCategorie</p>
+                            <h6 class="card-text">Disponibilité:</h6>
+                            <p class="card-text"><b>Début: </b>@Model.AvailableStart.ToString("dd MMM yy")</p>
+                            <p class="card-text"><b>Fin: </b>@Model.AvailableEnd.ToString("dd MMM yy")</p>
+                            <p class="card-text ">
+                                <b>Statut: </b>
+                                @if (DateTime.Now >= Model.AvailableStart && DateTime.Now <= Model.AvailableEnd)
+                                {
+                                    <span class="badge bg-success text-white">DISPONIBLE</span>
+                                }
+                                else if (DateTime.Now > Model.AvailableEnd)
+                                {
+                                    <span class="badge bg-danger text-white">EXPIRÉ</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-primary text-white">A VENIR</span>
+                                }
+                            </p>
+
+                            <p class="card-text">
+                                <b>Agents: </b>
+                                <hr />
+                                <div class="row">
+                                    @foreach(var agent in Model.Properties_Agents)
+                                        {
+                                            <div class="column text-center">
+                                                <img class="border-info rounded-circle" src="@agent.Agent.ProfilePictureURL" style="width: 150px; height:150px "/>
+                                                <br/>
+                                                <a asp-controller="Agents" asp-action="Details" asp-route-id="@agent.AgentId">@agent.Agent.FullName</a>
+                                            </div>
+
+                                        }
+                        </div>
+
+                            </p>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card-footer ">
+                            <p class="card-text">
+                                <a class="btn btn-outline-primary float-right" asp-action="Index">
+                                    Retour à la Liste
+                                </a>
+                                <a class="btn btn-success text-white @((DateTime.Now > Model.AvailableEnd) ? "disabled" : "")" 
+                                       asp-controller="Orders" 
+                                       asp-action="AddItemToShoppingCart" 
+                                   asp-route-id="@Model.Id">
+                                <i class="bi bi-cart-plus"></i> LOUER (Prix Nuité @Model.Price.ToString("c"))</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

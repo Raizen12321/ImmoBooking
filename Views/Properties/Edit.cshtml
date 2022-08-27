@@ -1,0 +1,113 @@
+﻿@using ImmoBooking.Models
+@using ImmoBooking.Data.Enum
+@model NewPropertyVM
+
+@{
+
+    ViewData["Title"] = "Mettre à Jour la propriété";
+
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h4>
+                Mettre à Jour la propriété
+            </h4>
+        </p>
+
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Name" class="control-label"></label>
+                                <input asp-for="Name" class="form-control"/>
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="AvailableStart" class="control-label"></label>
+                                <input asp-for="AvailableStart" type="date" class="form-control"/>
+                                <span asp-validation-for="AvailableStart" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="AvailableEnd" class="control-label"></label>
+                                <input asp-for="AvailableEnd" type="date" class="form-control"/>
+                                <span asp-validation-for="AvailableEnd" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Price" class="control-label"></label>
+                                <input asp-for="Price" type="number" class="form-control"/>
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="MainImageURL" class="control-label"></label>
+                                <input asp-for="MainImageURL" class="form-control"/>
+                                <span asp-validation-for="MainImageURL" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="AgencieId" class="control-label"></label>
+                                <select asp-for="AgencieId" class="form-control" asp-items="ViewBag.Agencies"></select>
+                                <span asp-validation-for="AgencieId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="PropertyCategorie" class="control-label"></label>
+                                <select asp-for="PropertyCategorie" class="form-control" asp-items="Html.GetEnumSelectList<PropertyCategorie>()"></select>
+                                <span asp-validation-for="PropertyCategorie" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="OwnerId" class="control-label"></label>
+                                <select asp-for="OwnerId" class="form-control" asp-items="ViewBag.Owners"></select>
+                                <span asp-validation-for="OwnerId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="AgentIds" class="control-label"></label>
+                                <select asp-for="AgentIds" class="form-control" asp-items="ViewBag.Agents" multiple></select>
+                                <span asp-validation-for="AgentIds" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label"></label>
+                                <textarea asp-for="Description" class="form-control"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 offset-4 text-center">
+                        <img width="100%" id="ImageUrlPreview" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Mettre à Jour" class="btn btn-outline-success float-right" />
+                        <a class="btn btn-outline-secondary" asp-action="Index">Voir Tout</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function(){
+            var output = document.getElementById("ImageUrlPreview");
+            output.src = $("#MainImageURL").val();
+        })
+
+        $("#MainImageURL").on("change", function(){
+            var output = document.getElementById("ImageUrlPreview");
+            output.src = $(this).val();
+        })
+        
+    </script>
+}

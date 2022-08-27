@@ -1,0 +1,76 @@
+﻿@using ImmoBooking.Models
+@model IEnumerable<Property>
+
+@{
+    ViewData["Title"]= "List of Properties";
+ }
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 col-xs-6 border-primary mb-3">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div class="card-header text-white bg-info">
+                            <p class="card-text">
+                                <h5 class="card-title">
+                                    @item.Name
+                                    
+                                        <a class="text-white float-right" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                                    
+                                </h5>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 container">
+                        <a asp-action="Images"><img src="@item.MainImageURL" width="285px" height="350px" alt="@item.Name"></a>
+                        <div class="overlay">Voir Les Photos</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <p class="card-text">@item.Description</p>
+                            <p class="card-text"><b>Agence: </b>@item.Agencie.Name</p>
+                            <p class="card-text"><b>Catégorie: </b>@item.PropertyCategorie</p>
+                            <h6 class="card-text">Disponibilité:</h6>
+                            <p class="card-text"><b>Début: </b>@item.AvailableStart.ToString("dd MMM yy")</p>
+                            <p class="card-text"><b>Fin: </b>@item.AvailableEnd.ToString("dd MMM yy")</p>
+                            <p class="card-text ">
+                                <b>Statut: </b>
+                                @if (DateTime.Now >= item.AvailableStart && DateTime.Now <= item.AvailableEnd)
+                                {
+                                    <span class="badge bg-success text-white">DISPONIBLE</span>
+                                }
+                                else if (DateTime.Now > item.AvailableEnd)
+                                {
+                                    <span class="badge bg-danger text-white">EXPIRÉ</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-primary text-white">A VENIR</span>
+                                }
+                            </p>
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card-footer ">
+                            <p class="card-text">
+                                <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id="@item.Id">
+                                    <i class="bi bi-eye-fill"></i> Afficher Details
+                                </a>
+                                <a class="btn btn-success text-white @((DateTime.Now > item.AvailableEnd) ? "disabled" : "")" 
+                                   asp-controller="Orders" 
+                                   asp-action="AddItemToShoppingCart" 
+                                   asp-route-id="@item.Id">
+                                <i class="bi bi-cart-plus"></i> LOUER (Prix Nuité @item.Price.ToString()DT)</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@await  Html.PartialAsync("_CreateItem","Properties")
